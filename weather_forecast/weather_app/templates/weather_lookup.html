@@ -1,0 +1,30 @@
+<!-- weather_app/templates/weather_lookup.html -->
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Weather Lookup</title>
+</head>
+<body>
+    <h1>Weather Lookup</h1>
+
+    <form method="post" action="{% url 'weather_lookup' %}">
+        {% csrf_token %}
+        <label for="time_input">Select Time:</label>
+        <input type="datetime-local" id="time_input" name="time_input" required>
+        <button type="submit">Get Weather</button>
+    </form>
+
+    {% if weather_data %}
+        <h2>Weather Forecast</h2>
+        <p>Time: {{ weather_data.dt_txt }}</p>
+        <p>Temperature: {{ weather_data.main.temp }} &#8451;</p>
+        <p>Description: {{ weather_data.weather.0.description }}</p>
+        <!-- Add more information as needed -->
+    {% elif weather_data_error %}
+        <p>{{ weather_data_error }}</p>
+    {% endif %}
+</body>
+</html>
